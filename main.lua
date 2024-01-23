@@ -1,4 +1,4 @@
-    local pda = {}
+local pda = {}
 pda.__index = pda
 
 local states = {"ready", "attacking", "stunned", "blocking", "dashing"}
