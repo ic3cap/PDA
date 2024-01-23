@@ -1,0 +1,3 @@
+This is a very rudimentary implementation of a pushdown automata for a combat game, based off of my current understanding of lua, finite state machines and stacks. Provided at the bottom of the script is some test code which can be ran to verify that the system works as intended. 
+
+I use a script similar to this in my own game, albeit slightly more complex. I recommend splitting the transitions into modules for cleanliness. I also recommend creating a module for "shared transitions", i.e. transitions which are the same regardless of previous state and exhibit no special behavior, as this prevents duplicate code. 
