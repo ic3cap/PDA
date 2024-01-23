@@ -55,12 +55,15 @@ local transitions = {
     }
 }
 
+export typeof PDA = typeof(pda.new(...))
+
 --[[
     Constructor, a uid is a unique identifier. It is needed if you intend to have multiple
     instances of the PDA, which will likely be the case. It is imperative to create your
     own uid generating logic, as this is not provided in the module.
+    * Generally recommended to use string based uIDs
 ]]
-function pda.new(uid, state)
+function pda.new(uid: string | number, state: string): PDA
     local self = {}
     
     self._id = uid
@@ -71,9 +74,10 @@ end
 
 --[[
     State updater function. Can provide optional arguments to be passed 
-    along for use in the transition function.
+    along for use in the transition function. Returns true if the state
+    was set successfully, and false if it was not.
 ]]
-function pda:set(input, ...)
+function pda:set(input: string, ...: any): boolean
     local stack = self._stack
     local current, stateTransition
 
@@ -92,22 +96,22 @@ function pda:set(input, ...)
 end
 
 -- Destroys the reference to the PDA, rendering it unusable and eligible for garbage collection.
-function pda:destroy()
+function pda:destroy(void): void
     pda[self] = nil
 end
 
 -- Used internally to determine if the stack is empty, before performing operations on it
-function pda:_isEmpty()
+function pda:_isEmpty(void): boolean
     return #self._stack == 0
 end
 
 -- Used internally to update the stack, inserts an element to the top of the stack
-function pda:push(v)
+function pda:push(v: string): void
     table.insert(self._stack, v)
 end
 
 -- Used internally to update the stack, removes and returns the top-most element
-function pda:pop()
+function pda:pop(): nil | string
     if self._isEmpty() then
         return nil
     end
@@ -116,7 +120,7 @@ function pda:pop()
 end
 
 -- Used internally to update the stack, removes and returns the bottom-most element
-function pda:shift()
+function pda:shift(): nil | string
     if self._isEmpty() then
         return nil
     end
